@@ -31,7 +31,7 @@ void nx_blit_scale_rgb565(const unsigned char *pixels,
     int src_bpp = 2;
 
     u32 *dst = (u32 *) gfxGetFramebuffer(NULL, NULL);
-    unsigned short *src = (unsigned short *) pixels;
+    //unsigned short *src = (unsigned short *) pixels;
 
     unsigned int v, r, g, b;
 
@@ -39,11 +39,13 @@ void nx_blit_scale_rgb565(const unsigned char *pixels,
 
         for (int cx = 0; cx < dst_width; cx++) {
 
-            v = src[(((int) (cy / scaleHeight) * (src_width * src_bpp)) +
-                     ((int) (cx / scaleWidth) * src_bpp))];
+            v = pixels[(((int) (cy / scaleHeight) * (src_width * src_bpp)) +
+                        ((int) (cx / scaleWidth) * src_bpp))];
+
             r = (v & 0xf800) >> 11;
             g = (v & 0x07e0) >> 5;
             b = v & 0x001f;
+
             u32 pixel = RGBA8_MAXALPHA(r << 3, g << 2, b << 3);
 
             /*
