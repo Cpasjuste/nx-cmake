@@ -10,6 +10,7 @@
 #define FRAME_WIDTH     384
 #define FRAME_HEIGHT    224
 
+#define RYUJINX 1
 
 /*
 static void wait() {
@@ -98,15 +99,25 @@ void nx_blit_transform_rgb565_to_rgba(NXTransform *transform) {
 
     switch (transform->transform) {
         case NX_TRANSFORM_ROT_90:
+#ifdef RYUJINX
+            gfxConfigureTransform(NATIVE_WINDOW_TRANSFORM_FLIP_H
+                                  | NATIVE_WINDOW_TRANSFORM_ROT_90);
+#else
             gfxConfigureTransform(NATIVE_WINDOW_TRANSFORM_FLIP_V
                                   | NATIVE_WINDOW_TRANSFORM_ROT_90);
+#endif
             break;
         case NX_TRANSFORM_ROT_180:
             gfxConfigureTransform(NATIVE_WINDOW_TRANSFORM_FLIP_H);
             break;
         case NX_TRANSFORM_ROT_270:
+#ifdef RYUJINX
+            gfxConfigureTransform(NATIVE_WINDOW_TRANSFORM_FLIP_V
+                                  | NATIVE_WINDOW_TRANSFORM_ROT_90);
+#else
             gfxConfigureTransform(NATIVE_WINDOW_TRANSFORM_FLIP_H
                                   | NATIVE_WINDOW_TRANSFORM_ROT_90);
+#endif
             break;
         default:
             gfxConfigureTransform(NATIVE_WINDOW_TRANSFORM_FLIP_V);
