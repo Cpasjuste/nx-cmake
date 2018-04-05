@@ -26,9 +26,14 @@ project(nx-cmake)
 set(FLAGS -Wall)
 
 add_executable(${CMAKE_PROJECT_NAME}.elf source/main.c)
-target_include_directories(${CMAKE_PROJECT_NAME}.elf PRIVATE source)
+target_include_directories(${CMAKE_PROJECT_NAME}.elf PRIVATE
+        source
+        /home/cpasjuste/dev/multi/osmesa/mesa-18.0.0/include
+        )
 target_link_libraries(${CMAKE_PROJECT_NAME}.elf
+        /home/cpasjuste/dev/multi/osmesa/mesa-18.0.0/src/mesa/drivers/osmesa/.libs/libOSMesa.a m stdc++
         ${DEVKITPRO}/portlibs/switch/lib/libnxlink_print.a
+        ${DEVKITPRO}/portlibs/switch/lib/libz.a
         ${DEVKITPRO}/libnx/lib/libnx.a)
 
 #####################
